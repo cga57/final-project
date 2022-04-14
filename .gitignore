@@ -1,2 +1,6 @@
 .env
 .twitter_keys.yaml
+**/__pycache__
+model
+rand_samples.json
+sa_dataset.csv
