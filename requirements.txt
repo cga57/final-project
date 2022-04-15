@@ -1,3 +1,6 @@
 nltk
 seaborn
 matplotlib
+sklearn
+searchtweets-v2
+pandas
