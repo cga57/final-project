@@ -1,26 +1,24 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import SGDClassifier
+# Trains a new model from scratch
 from sklearn.pipeline import Pipeline
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 
-from tweet_cluster import vectorize
 from utils import tokenize_tweets
-import numpy as np
 import pandas as pd
 
 sentimental_analysis = Pipeline([
     ('vectorizer', TfidfVectorizer()),
     ('clf', SGDClassifier(loss='hinge', penalty='l2',
-     alpha=1e-2, random_state=42, max_iter=100, tol=None))
+     alpha=1e-3, random_state=42, max_iter=5, learning_rate="optimal", tol=None))
 ])
 
 def train_model():
     data = pd.read_csv("sa_dataset.csv", header=None, names=[
                       "sentiment", "id", "date", "query", "username", "text"], encoding="ISO-8859-1")
 
-    tweets = tokenize_tweets(data, "text", "tokenized", False)
+    tweets = tokenize_tweets(data, "text", "tokenized")
     X = tweets["tokenized"]
     y = data["sentiment"]
 
