@@ -7,6 +7,9 @@ import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 import re
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -94,6 +97,7 @@ class TweetCluster:
         self.pca = PCA(n_components=2, random_state=42)
         self.lda = LatentDirichletAllocation(n_components=num_clusters, random_state=42)
         self.X = None
+        self.data = None
 
     def fit(self, input_df, input_col):
         from utils import tokenize_tweets
@@ -115,6 +119,8 @@ class TweetCluster:
         input_df['x0'] = x0
         input_df['x1'] = x1
 
+        self.data = input_df
+
         return input_df
 
         
@@ -125,3 +131,15 @@ class TweetCluster:
             print('\nTopic {}'.format(i + 1))
             # for each row of the dataframe, find the n terms that have the highest tf idf score
             print(','.join([terms[t] for t in np.argsort(r)[-keywords:]]))
+    
+    def visualize(self):
+        # set image size
+        plt.figure(figsize=(12, 7))
+        # set a title
+        plt.title("TF-IDF + KMeans 20newsgroup clustering", fontdict={"fontsize": 18})
+        # set axes names
+        plt.xlabel("X0", fontdict={"fontsize": 16})
+        plt.ylabel("X1", fontdict={"fontsize": 16})
+        # create scatter plot with seaborn, where hue is the class used to group the data
+        sns.scatterplot(data=self.data, x='x0', y='x1', hue='cluster', palette="viridis")
+        plt.show()

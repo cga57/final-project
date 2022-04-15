@@ -1,3 +1,6 @@
+# Called to get a sentimental analysis model
+# Tries to train a new one if one is not available
+
 import pickle
 from .sa_sklearn import *
 

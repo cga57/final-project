@@ -13,11 +13,12 @@ def main(topic):
     print("Retrieving Tweets")
     tweets_list = getTweets(topic)
 
+    print("Valid tweets found:", len(tweets_list))
     print("Loading tweets into dataframe")
     tweets_df = pd.DataFrame(tweets_list, columns = ["text"])
 
     print("Tokenizing and cleaning tweets")
-    tweets_df = tokenize_tweets(tweets_df, "text", "tokenized", remove_stopwords=False)
+    tweets_df = tokenize_tweets(tweets_df, "text", "tokenized")
 
     # Use the sklearn model to add the sentiment scores for each tweet
     sa_model = get_samodel()
@@ -26,16 +27,18 @@ def main(topic):
     tweets_df["sentiment"] = sa_model.predict(tweets_df["tokenized"])
 
     print("Checkout rand_samples.json for some predictions")
-    save_rand_samples(tweets_df)
+    save_rand_samples(tweets_df, len(tweets_list))
 
     print("Trying to cluster tweets into groups to find main topics")
     tweets_cluster = TweetCluster()
     tweets_df_clusters = tweets_cluster.fit(tweets_df, "text")
-    print(tweets_df_clusters)
+
+    topic_sentiments = tweets_df_clusters.groupby(tweets_df_clusters["cluster"]).mean()
+    print(topic_sentiments)
     tweets_cluster.get_clusters(keywords=4)
+    tweets_cluster.visualize()
 
-
-def save_rand_samples(input_df, count=5):
+def save_rand_samples(input_df, count=100):
     sample = input_df.sample(n=count)
     tweets = []
     for index, row in sample.iterrows():
