@@ -32,3 +32,11 @@ parameters for twieet field in call:
 ## Train Sentimental Analysis Model
 ## Train Top Story Model
 ## Data Analysis of Recent Twitter Tweets (main.py)
+
+## Credits/Sources
+### Dataset
+We have two sentimental analysis models. The differentiating factor between them is the dataset they were trained on:
+    - Positive and Negative Sentiment Dataset(1.6 million tweets) - http://help.sentiment140.com/
+    - Positive, Neutral and Negative Sentiment Dataset(76 thousand tweets) - https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis
+- https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
+    - 
