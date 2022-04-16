@@ -25,6 +25,8 @@ When a CLI argument present, it will override the search term set in `options.ya
 
 Running the program writes a lot of information to terminal which is where the bulk of the interesting information is. It also produces a folder called `output` which contains some relevant information from running the program
 
+## Glossary
+Please note that terms related to sentimental analysis usually ends with `pn` or `pnn`. This differentiates our two sentimental analysis models where `pn` refers to `Postive Negative` only dataset and `pnn` refers to `Postive Neutral Negative` dataset
 
 ## Credits/Sources
 ### Dataset
