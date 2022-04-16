@@ -1,0 +1,21 @@
+# This topic will be used for analysis
+search_term: "COVID-19"
+
+# How many subtopics should be identified
+# For instance this is used like number of clusters for kmean
+topics_count: 3
+
+# How many keywords to display for each topic
+# These keywords will be the n most prevalent among this topic
+# where n is the number of keywords
+keywords_count: 4
+
+# Whether to include the search_term itself in certain scenarions when running the program
+# If this is false, then the tokenized list will not contain the search_term
+# This will also remove the topic word from the list of keywords for a certain topic
+include_search_term: true
+
+# After getting tweets and predicting sentiment scores, some random tweets from the dataframe
+# will be written to file 'output/rand_samples.json' along with their sentiment scores. 
+# This options is used to specify the count
+random_tweets_count: 40
