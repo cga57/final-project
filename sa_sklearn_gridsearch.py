@@ -17,8 +17,8 @@ sentimental_analysis = Pipeline([
 
 parameters = {
     'clf__loss': ('hinge', 'huber', 'perceptron'),
-    'clf__alpha': (1e-1, 1e-5),
-    'clf__max_iter': (1, 500),
+    'clf__alpha': (1e-1, 1e-8),
+    'clf__max_iter': (1, 1000),
     'clf__learning_rate': ('adaptive', 'optimal', 'invscaling')
 }
 
