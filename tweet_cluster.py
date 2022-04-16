@@ -54,17 +54,17 @@ class TweetCluster:
 
     # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
     def visualize(self):
-        # set image size
+        sns.scatterplot(data=self.data, x='x0', y='x1', hue='cluster')
+        plt.show()
+        
         plt.figure(figsize=(12, 7))
-        # set a title
-        plt.title("Tweet Clustering",
-                  fontdict={"fontsize": 18})
-        # set axes names
-        plt.xlabel("X0", fontdict={"fontsize": 16})
-        plt.ylabel("X1", fontdict={"fontsize": 16})
-        # create scatter plot with seaborn, where hue is the class used to group the data
-        sns.scatterplot(data=self.data, x='x0', y='x1',
-                        hue='cluster', palette="viridis")
+        plt.title("Bar Chart for number of tweets", fontdict={"fontsize": 18})
+        plt.xlabel("Cluster Group Number", fontdict={"fontsize": 16})
+        plt.ylabel("Number of Tweets", fontdict={"fontsize": 16})
+
+        myFrame = self.data.groupby("cluster").count()
+        barChartXAxis = myFrame.index.values.tolist()
+        plt.bar(barChartXAxis,myFrame["text"])
         plt.show()
 
     # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
