@@ -1,5 +1,5 @@
 # This topic will be used for analysis
-search_term: "COVID-19"
+search_term: "Air Canada"
 
 # How many subtopics should be identified
 # For instance this is used like number of clusters for kmean

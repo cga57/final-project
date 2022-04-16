@@ -30,17 +30,6 @@ def main(options):
     sentiments, keywords, tweets = calculate_topics(tweets_df, num_clusters=options["topics_count"], num_keywords=options["keywords_count"], alg="nmf")
     print_topic_stats(sentiments, keywords, tweets)
 
-    # print("Trying to cluster tweets into groups to find main topics")
-    # tweets_cluster = TweetCluster()
-    # tweets_df_clusters = tweets_cluster.fit(tweets_df, "text")
-
-    # topic_sentiments = tweets_df_clusters.groupby(tweets_df_clusters["cluster"]).mean()
-    # topic_top_keywords = tweets_cluster.top_keywords_per_topic()
-    # top_tweets = tweets_cluster.top_tweets_per_topic()
-
-    # print_topic_stats(topic_sentiments, topic_top_keywords, top_tweets)
-    exit(0)
-
 
 def get_and_clean_tweets(search_term, include_search_term):
     print(f"Your chosen topic: {search_term}")
@@ -87,6 +76,8 @@ def calculate_topics(tweets_df, num_clusters, num_keywords, alg=""):
         topic_top_keywords = tweets_cluster.top_keywords_per_topic_nmf(count=num_keywords)
         topic_top_tweets = None
 
+        # tweets_cluster.visualize_nmf()
+
     elif alg == "kmeans":
         print(f"\nTrying to cluster tweets with {alg} algorithm")
         print("-----------------------------------------------\n")
@@ -97,6 +88,7 @@ def calculate_topics(tweets_df, num_clusters, num_keywords, alg=""):
         topic_top_keywords = tweets_cluster.top_keywords_per_topic(count=num_keywords)
         topic_top_tweets = tweets_cluster.top_tweets_per_topic()
 
+        tweets_cluster.visualize_kmeans()
     
 
     return topic_sentiments, topic_top_keywords, topic_top_tweets

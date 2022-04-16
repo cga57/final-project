@@ -4,3 +4,4 @@ matplotlib
 sklearn
 searchtweets-v2
 pandas
+numpy

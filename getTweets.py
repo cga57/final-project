@@ -7,7 +7,7 @@ v2_search_args = load_credentials(".twitter_keys.yaml", yaml_key="search_tweets_
 
 # takes in 10000 tweets from
 stringList=[];
-size = 2;
+size = 50;
 def getTweets(topic):
   for i in range(size):
     query = gen_request_parameters(topic, tweet_fields = "created_at,geo,lang",results_per_call=100,granularity=None)

@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pathlib
 
 def vectorize(input_df, vectorizer, input_col):
     X = vectorizer.fit_transform(input_df[input_col])
@@ -29,7 +30,7 @@ class TweetCluster:
 
         pca_vecs = self.pca.fit_transform(self.X.toarray())
 
-        # save our two dimensions into x0 and x1
+        # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
         x0 = pca_vecs[:, 0]
         x1 = pca_vecs[:, 1]
 
@@ -48,14 +49,26 @@ class TweetCluster:
 
         self.nmf.fit(self.X)
 
+        # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
+        pca_vecs = self.pca.fit_transform(self.X.toarray())
+
+        x0 = pca_vecs[:, 0]
+        x1 = pca_vecs[:, 1]
+
+        input_df['x0'] = x0
+        input_df['x1'] = x1
+
         self.data = input_df
 
         return input_df
 
     # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
-    def visualize(self):
+    def visualize_kmeans(self):
+        pathlib.Path('output').mkdir(exist_ok=True)
+        plt.figure(figsize=(12, 7))
+        plt.title("Kmeans cluster distribution", fontdict={"fontsize": 18})
         sns.scatterplot(data=self.data, x='x0', y='x1', hue='cluster')
-        plt.show()
+        plt.savefig('output/kmeans_cluster.png')
         
         plt.figure(figsize=(12, 7))
         plt.title("Bar Chart for number of tweets", fontdict={"fontsize": 18})
@@ -65,7 +78,37 @@ class TweetCluster:
         myFrame = self.data.groupby("cluster").count()
         barChartXAxis = myFrame.index.values.tolist()
         plt.bar(barChartXAxis,myFrame["text"])
-        plt.show()
+        plt.savefig('output/kmeans_cluster_size.png')
+
+
+
+        plt.figure(figsize=(12, 7))
+        plt.title("Topic and Avg Tweet sentiment(PNN)", fontdict={"fontsize": 18})
+        plt.xlabel("Topic Number", fontdict={"fontsize": 16})
+        plt.ylabel("Avg Tweet sentiment(0-Negative, 2-Neutral, 4-Postive)", fontdict={"fontsize": 16})
+        
+        df = self.data.groupby("cluster").mean()
+        plt.bar(barChartXAxis, df["sentiment_pnn"])
+        plt.savefig('output/kmeans_cluster_sentiment_pnn.png')
+
+
+
+        plt.figure(figsize=(12, 7))
+        plt.title("Topic and Avg Tweet sentiment(PN)", fontdict={"fontsize": 18})
+        plt.xlabel("Topic Number", fontdict={"fontsize": 16})
+        plt.ylabel("Avg Tweet sentiment(0-Negative, 4-Postive)", fontdict={"fontsize": 16})
+        
+        df = self.data.groupby("cluster").mean()
+        plt.bar(barChartXAxis, df["sentiment_pn"])
+        plt.savefig('output/kmeans_cluster_sentiment_pn.png')
+
+    # # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
+    # def visualize_nmf(self):
+    #     plt.figure(figsize=(12, 7))
+    #     plt.title("Non-Negative Matrix Factorization cluster distribution", fontdict={"fontsize": 18})
+    #     pathlib.Path('output').mkdir(exist_ok=True)
+    #     sns.scatterplot(data=self.data, x='x0', y='x1', hue='cluster')
+    #     plt.savefig('output/nmf_cluster.png')
 
     # Source: https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
     # This code is adapted from a function in this article
