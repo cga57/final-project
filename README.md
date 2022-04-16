@@ -1,47 +1,43 @@
-# final-project
+# Twitter Sentiment Analysis and Clustering Tweets
 
-Can install following packages using pip3:
-pandas
-sklearn
-nltk
-searchtweets-v2
+## Project Installation and Requirements
+Please run the following command:
+```
+pip install -r requirements.txt
+```
+Our program was tested on `Python 3.8.10`
 
-parameters for tweet field in call:
-[attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld]
+## Running the Project
+In our root folder, we have a file called `options.yaml`. The purpose of this file is to load some configurable options when running the program (instead of CLI which can be cumbersome)
 
-## Project Plan
+The file documents each option and why it is there.
 
-1. We get twitter tweets into JSON format
-2.
+Running the project is as simple as the following
+```
+python3 main.py
+```
 
-- Input file: 7 days of twitter tweets (.json)
-- TA runs the main.py
-- It reads this .json file into pandas dataframe
-- We use our Sentimental Analysis model(Random Forest) and give each of your tweets a score of positivity
-- We use our ( Top story classification model) which takes tweets as input it produces the top 3 stories and their score.
+You can provide the search term either in `option.yaml`, or as CLI argument:
+```
+python3 main.py "covid 19"
+```
+When a CLI argument present, it will override the search term set in `options.yaml`
 
-- Visualization(of TOP 3)
+Running the program writes a lot of information to terminal which is where the bulk of the interesting information is. It also produces a folder called `output` which contains some relevant information from running the program
 
-## Our Python Project
-
-- get_tweets.py
-- sentimental_analysis.py (Output model)
-- top_story_model.py (Output model)
-- main.py (inputs - 7_day_tweets.json, sa_model, top_story_model)
-
-# Our Project Tasks
-
-## Getting Twitter Tweets
-
-## Train Sentimental Analysis Model
-
-## Train Top Story Model
-## Data Analysis of Recent Twitter Tweets (main.py)
 
 ## Credits/Sources
 ### Dataset
 We have two sentimental analysis models. The differentiating factor between them is the dataset they were trained on:
-    - Positive and Negative Sentiment Dataset(1.6 million tweets) - http://help.sentiment140.com/
-    - Positive, Neutral and Negative Sentiment Dataset(76 thousand tweets) - https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis
+    
+- Positive and Negative Sentiment Dataset(1.6 million tweets) - http://help.sentiment140.com/
+
+- Positive, Neutral and Negative Sentiment Dataset(76 thousand tweets) - https://www.kaggle.com/datasets/jp797498e/
+
+### Sentimental Analysis
+- Sklearn Docs, Spark docs
+
+### Other sources(graphing, kmeans, nmf etc.)
 - https://medium.com/mlearning-ai/text-clustering-with-tf-idf-in-python-c94cd26a31e7
-    - 
+ - https://blog.mlreview.com/topic-modeling-with-scikit-learn-e80d33668730
+- https://towardsdatascience.com/topic-modelling-in-python-with-nltk-and-gensim-4ef03213cd21
