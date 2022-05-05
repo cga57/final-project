@@ -1,5 +1,6 @@
 # Twitter Sentiment Analysis and Clustering Tweets
 
+**_Note: The API Keys for Twitter was included for marking and has since been revoked. Please use your own keys when running the program_**
 ## Project Installation and Requirements
 Please run the following command:
 ```
